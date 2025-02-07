@@ -1,0 +1,9 @@
+{
+  "type": "json",
+  "data": {
+    "theme": "light",
+    "language": "fr",
+    "timezone": "UTC",
+    "email_notifications": false
+  }
+}
