@@ -1,0 +1,10 @@
+AGENDIZE
+
+URL de récupération du code :
+https://validation.agendize.com/o/oauth2/authorize?client_id=86c13175e8e3ab6b3246cc1e50d0fd0863980315&redirect_uri=https://google.com
+
+URL d'autorisation utilisant le code :
+https://validation.agendize.com/o/oauth2/token?client_id=86c13175e8e3ab6b3246cc1e50d0fd0863980315&client_secret=c84f632d362af29bb09bc956994dd0d0eb3d678d&redirect_uri=https:///connectedapp.com/oauth2/callback&grant_type=authorization_code&code=af87dedf11f326c48f7f19820a3c5b9c52d91feb
+
+URL pour rafraichir le token :
+https://validation.agendize.com/o/oauth2/token?client_id=86c13175e8e3ab6b3246cc1e50d0fd0863980315&client_secret=c84f632d362af29bb09bc956994dd0d0eb3d678d&grant_type=authorization_code&code=af87dedf11f326c48f7f19820a3c5b9c52d91feb&refresh_token=747cd8e0393355e227d81d0bc2e9a0db6c42f6c9
