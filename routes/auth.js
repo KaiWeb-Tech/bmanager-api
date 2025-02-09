@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({ uid: user.id, email: user.email, roles: user.roles }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ uid: user.id, email: user.email, companyName: user.company_name, roles: user.roles }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.json({ token });
     } catch (error) {
@@ -77,7 +77,7 @@ router.get('/google/callback', async (req, res) => {
             user = await User.findByEmail(email);
         }
 
-        const tokenJWT = jwt.sign({ uid: user.id, email: user.email, roles: user.roles }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const tokenJWT = jwt.sign({ uid: user.id, email: user.email, companyName: user.company_name, roles: user.roles }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ token: tokenJWT });
     } catch (error) {
         console.error(error);

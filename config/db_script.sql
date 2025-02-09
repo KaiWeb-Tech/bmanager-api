@@ -5,13 +5,14 @@ USE bmanager_api;
 -- Table des utilisateurs
 CREATE TABLE IF NOT EXISTS users
 (
-    id           INT AUTO_INCREMENT PRIMARY KEY,
-    company_name VARCHAR(255) NOT NULL,
-    password     VARCHAR(255) NOT NULL,
-    email        VARCHAR(255) NOT NULL UNIQUE,
-    roles        VARCHAR(255) NOT NULL DEFAULT 'ROLE_USER',
-    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id            INT AUTO_INCREMENT PRIMARY KEY,
+    company_name  VARCHAR(255) NOT NULL,
+    password      VARCHAR(255) NOT NULL,
+    email         VARCHAR(255) NOT NULL UNIQUE,
+    auth_provider VARCHAR(10)           DEFAULT 'local',
+    roles         VARCHAR(255) NOT NULL DEFAULT 'ROLE_USER',
+    created_at    TIMESTAMP             DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 -- Table des paramètres utilisateur
