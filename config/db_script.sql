@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS users
     email         VARCHAR(255) NOT NULL UNIQUE,
     auth_provider VARCHAR(10)           DEFAULT 'local',
     roles         VARCHAR(255) NOT NULL DEFAULT 'ROLE_USER',
+    api_key       VARCHAR(255),
+    token         VARCHAR(255),
     created_at    TIMESTAMP             DEFAULT CURRENT_TIMESTAMP,
     updated_at    TIMESTAMP             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
