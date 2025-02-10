@@ -13,15 +13,29 @@ export class Settings {
     }
 
     static fromJson(json) {
-        return new Settings(json.id, json.user_id, json.theme, json.timezone, json.notifications, json.language, json.created_at, json.updated_at);
+        return new Settings(
+            json.id,
+            json.user_id,
+            json.theme,
+            json.timezone,
+            json.notifications,
+            json.language,
+            json.created_at,
+            json.updated_at
+        );
     }
 
     static async createSettings(userId, theme, timezone, notifications, language) {
-        const [result] = await db.query(
-            'INSERT INTO settings (user_id, theme, timezone, notifications, language) VALUES ($1, $2, $3, $4, $5)',
+        // Exécuter la requête SQL
+        const result = await db.query(
+            'INSERT INTO settings (user_id, theme, timezone, notifications, language) VALUES ($1, $2, $3, $4, $5) RETURNING id',
             [userId, theme, timezone, notifications, language]
         );
-        return result.insertId;
+
+        // Accéder à l'ID inséré via rows[0].id
+        const insertedId = result.rows[0]?.id;
+
+        return insertedId;
     }
 
     toJson() {

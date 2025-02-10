@@ -1,7 +1,7 @@
 import db from "../config/db.js";
 import bcrypt from 'bcryptjs';
-import {Settings} from "./Settings.js";
-import {createRequire} from "module";
+import { Settings } from "./Settings.js";
+import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const defaultSettings = require('../schemas/default_settings.json');
 
@@ -27,18 +27,28 @@ export class User {
 
         const authProvider = isGoogleAuth ? 'google' : 'local';
 
-        const [result] = await db.query(
+        const result = await db.query(
             'INSERT INTO users (company_name, email, password, auth_provider) VALUES ($1, $2, $3, $4) RETURNING id',
             [companyName, email, hashedPassword, authProvider]
         );
 
-        const settings = await Settings.createSettings(result.insertId, defaultSettings.data.theme, defaultSettings.data.timezone, defaultSettings.data.email_notifications, defaultSettings.data.language);
-        return {userId: result.insertId, settingsId: settings};
+        // Accéder au premier élément de rows
+        const insertedUser = result.rows[0];
+
+        const settings = await Settings.createSettings(insertedUser.id, defaultSettings.data.theme, defaultSettings.data.timezone, defaultSettings.data.email_notifications, defaultSettings.data.language);
+
+        return { userId: insertedUser.id, settingsId: settings };
     }
 
     static async findByEmail(email) {
-        const [rows] = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-        return rows[0];
+        const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+
+        // Vérifier si des résultats existent
+        if (result.rows.length > 0) {
+            return result.rows[0];
+        } else {
+            return null; // Aucun utilisateur trouvé
+        }
     }
 
     static async verifyPassword(email, password) {
