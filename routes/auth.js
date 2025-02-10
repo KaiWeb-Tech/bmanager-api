@@ -3,7 +3,9 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { User } from '../models/User.js';
 import { OAuth2Client } from 'google-auth-library';
-dotenv.config({ path: '.env.local' });
+
+// dotenv.config({ path: '.env.local' });
+dotenv.config();
 
 const router = express.Router();
 const client = new OAuth2Client({

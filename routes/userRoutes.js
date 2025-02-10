@@ -8,7 +8,8 @@ import {Settings} from '../models/Settings.js';
 import jwt from "jsonwebtoken";
 import {Themes} from "../constants/Themes.js";
 
-dotenv.config({ path: '.env.local' });
+// dotenv.config({ path: '.env.local' });
+dotenv.config();
 
 const router = express.Router();
 
