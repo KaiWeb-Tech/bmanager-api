@@ -28,7 +28,7 @@ export class User {
         const authProvider = isGoogleAuth ? 'google' : 'local';
 
         const [result] = await db.query(
-            'INSERT INTO users (company_name, email, password, auth_provider) VALUES (?, ?, ?, ?)',
+            'INSERT INTO users (company_name, email, password, auth_provider) VALUES ($1, $2, $3, $4) RETURNING id',
             [companyName, email, hashedPassword, authProvider]
         );
 
@@ -37,7 +37,7 @@ export class User {
     }
 
     static async findByEmail(email) {
-        const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        const [rows] = await db.query('SELECT * FROM users WHERE email = $1', [email]);
         return rows[0];
     }
 

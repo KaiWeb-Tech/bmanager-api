@@ -18,7 +18,7 @@ export class Settings {
 
     static async createSettings(userId, theme, timezone, notifications, language) {
         const [result] = await db.query(
-            'INSERT INTO settings (user_id, theme, timezone, notifications, language) VALUES (?, ?, ?, ?, ?)',
+            'INSERT INTO settings (user_id, theme, timezone, notifications, language) VALUES ($1, $2, $3, $4, $5)',
             [userId, theme, timezone, notifications, language]
         );
         return result.insertId;

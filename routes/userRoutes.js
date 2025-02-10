@@ -16,8 +16,8 @@ const router = express.Router();
 router.get('/', authMiddleware.authenticateToken, async (req, res) => {
     try {
         const id = req.user.uid
-        const [userDB] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
-        const [userSettingsDB] = await db.query('SELECT * FROM settings WHERE user_id = ?', [id]);
+        const [userDB] = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+        const [userSettingsDB] = await db.query('SELECT * FROM settings WHERE user_id = 1', [id]);
 
         if (userDB.length === 0) {
             return res.status(404).json({message: 'User not found'});
@@ -70,7 +70,7 @@ router.put('/', authMiddleware.authenticateToken, async (req, res) => {
             return res.status(404).json({message: 'User not found'});
         }
 
-        const [updatedUserDB] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
+        const [updatedUserDB] = await db.query('SELECT * FROM users WHERE id = $1', [id]);
         const userUpdated = User.fromJson(updatedUserDB[0]);
 
         res.status(200).json(userUpdated);
@@ -127,7 +127,7 @@ router.put('/settings', authMiddleware.authenticateToken, async (req, res) => {
         const query = `
             UPDATE settings
             SET ${updates.join(', ')}
-            WHERE user_id = ?
+            WHERE user_id = $1
         `;
 
         const [settings] = await db.query(query, values);
@@ -136,7 +136,7 @@ router.put('/settings', authMiddleware.authenticateToken, async (req, res) => {
             return res.status(404).json({message: 'Settings not found'});
         }
 
-        const [updatedSettingsDB] = await db.query('SELECT * FROM settings WHERE user_id = ?', [id]);
+        const [updatedSettingsDB] = await db.query('SELECT * FROM settings WHERE user_id = $1', [id]);
         const settingsUpdated = Settings.fromJson(updatedSettingsDB[0]);
 
         res.status(200).json(settingsUpdated);
