@@ -1,13 +1,28 @@
 import db from "../config/db.js";
 
 export class Settings {
-    constructor(id, user_id, theme, timezone, notifications, language, created_at, updated_at) {
+    constructor(
+        id,
+        user_id,
+        theme,
+        timezone,
+        notifications,
+        language,
+        api_key,
+        token,
+        vf_token,
+        created_at,
+        updated_at
+    ) {
         this.id = id;
         this.user_id = user_id;
         this.theme = theme;
         this.timezone = timezone;
         this.notifications = notifications;
         this.language = language;
+        this.api_key = api_key;
+        this.token = token;
+        this.vf_token = vf_token;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -20,22 +35,27 @@ export class Settings {
             json.timezone,
             json.notifications,
             json.language,
+            json.api_key,
+            json.token,
+            json.vf_token,
             json.created_at,
             json.updated_at
         );
     }
 
     static async createSettings(userId, theme, timezone, notifications, language) {
-        // Exécuter la requête SQL
-        const result = await db.query(
-            'INSERT INTO settings (user_id, theme, timezone, notifications, language) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-            [userId, theme, timezone, notifications, language]
+        const [result] = await db.query(
+            'INSERT INTO settings (user_id, theme, timezone, notifications, language) VALUES (?, ?, ?, ?, ?)',
+            [
+                userId,
+                theme,
+                timezone,
+                notifications,
+                language
+            ]
         );
 
-        // Accéder à l'ID inséré via rows[0].id
-        const insertedId = result.rows[0]?.id;
-
-        return insertedId;
+        return result.insertId;
     }
 
     toJson() {
@@ -46,6 +66,9 @@ export class Settings {
             timezone: this.timezone,
             notifications: this.notifications,
             language: this.language,
+            api_key: this.api_key,
+            token: this.token,
+            vf_token: this.vf_token,
             created_at: this.created_at,
             updated_at: this.updated_at
         };

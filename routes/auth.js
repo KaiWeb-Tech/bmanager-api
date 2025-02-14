@@ -4,8 +4,8 @@ import dotenv from 'dotenv';
 import { User } from '../models/User.js';
 import { OAuth2Client } from 'google-auth-library';
 
-// dotenv.config({ path: '.env.local' });
-dotenv.config();
+dotenv.config({ path: '.env.local' ?? '.env' });
+// dotenv.config();
 
 const router = express.Router();
 const client = new OAuth2Client({

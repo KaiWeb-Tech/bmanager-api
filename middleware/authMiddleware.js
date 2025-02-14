@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { Roles } from '../constants/Roles.js';
 
-dotenv.config();
+dotenv.config({ path: '.env.local' ?? '.env' });
+// dotenv.config();
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];

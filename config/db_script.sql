@@ -11,8 +11,6 @@ CREATE TABLE IF NOT EXISTS users
     email         VARCHAR(255) NOT NULL UNIQUE,
     auth_provider VARCHAR(10)           DEFAULT 'local',
     roles         VARCHAR(255) NOT NULL DEFAULT 'ROLE_USER',
-    api_key       VARCHAR(255),
-    token         VARCHAR(255),
     created_at    TIMESTAMP             DEFAULT CURRENT_TIMESTAMP,
     updated_at    TIMESTAMP             DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -26,6 +24,9 @@ CREATE TABLE IF NOT EXISTS settings
     timezone      VARCHAR(50) DEFAULT 'UTC',
     notifications BOOLEAN     DEFAULT FALSE,
     language      VARCHAR(10) DEFAULT 'fr',
+    api_key       VARCHAR(255),
+    token         VARCHAR(255),
+    vf_token      VARCHAR(255),
     created_at    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     updated_at    TIMESTAMP   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE

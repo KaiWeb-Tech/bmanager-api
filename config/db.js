@@ -1,29 +1,15 @@
-import pg from "pg";
-const { Pool } = pg;
+import mysql from 'mysql2/promise.js';
 import dotenv from 'dotenv';
 
-// dotenv.config({ path: '.env.local' });
-dotenv.config();
+dotenv.config({ path: '.env.local' ?? '.env' });
+// dotenv.config();
 
-const pool = new Pool({
+const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     port: process.env.DB_PORT,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    waitForConnections: true,
-    connectionLimit: 10,
-    ssl: {
-        rejectUnauthorized: false
-    }
-});
-
-pool.query('SELECT NOW()', (err, res) => {
-    if (err) {
-        console.error('Erreur de connexion à la base de données :', err);
-    } else {
-        console.log('Connexion réussie !', res.rows);
-    }
 });
 
 export default pool;
