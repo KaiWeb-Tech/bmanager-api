@@ -1,13 +1,16 @@
 import db from "../config/db.js";
 
 export class Settings {
-    constructor(id, user_id, theme, timezone, notifications, language, created_at, updated_at) {
+    constructor(id, user_id, theme, timezone, notifications, language, api_key, token, vf_token, created_at, updated_at) {
         this.id = id;
         this.user_id = user_id;
         this.theme = theme;
         this.timezone = timezone;
         this.notifications = notifications;
         this.language = language;
+        this.api_key = api_key;
+        this.token = token;
+        this.vf_token = vf_token;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -20,6 +23,9 @@ export class Settings {
             json.timezone,
             json.notifications,
             json.language,
+            json.api_key,
+            json.token,
+            json.vf_token,
             json.created_at,
             json.updated_at
         );
@@ -32,10 +38,7 @@ export class Settings {
             [userId, theme, timezone, notifications, language]
         );
 
-        // Accéder à l'ID inséré via rows[0].id
-        const insertedId = result.rows[0]?.id;
-
-        return insertedId;
+        return result.rows[0]?.id;
     }
 
     toJson() {

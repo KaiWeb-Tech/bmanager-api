@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get('/', authMiddleware.authenticateToken, async (req, res) => {
     try {
-        const id = req.user.uid;
+        const id = req.user.id;
 
         const userDBResult = await db.query('SELECT * FROM users WHERE id = $1', [id]);
         const userSettingsDBResult = await db.query('SELECT * FROM settings WHERE user_id = $1', [id]);

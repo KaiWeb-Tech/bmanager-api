@@ -6,20 +6,18 @@ const require = createRequire(import.meta.url);
 const defaultSettings = require('../schemas/default_settings.json');
 
 export class User {
-    constructor(id, nickname, email, roles, auth_provider, api_key, token, created_at, updated_at) {
+    constructor(id, nickname, email, roles, auth_provider, created_at, updated_at) {
         this.id = id;
         this.company_name = nickname;
         this.email = email;
         this.roles = roles;
         this.auth_provider = auth_provider;
-        this.api_key = api_key;
-        this.token = token;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
 
     static fromJson(json) {
-        return new User(json.id, json.company_name, json.email, json.roles, json.auth_provider, json.api_key, json.token, json.created_at, json.updated_at);
+        return new User(json.id, json.company_name, json.email, json.roles, json.auth_provider, json.created_at, json.updated_at);
     }
 
     static async createUser(companyName, email, password, isGoogleAuth = false) {
@@ -34,7 +32,6 @@ export class User {
             [companyName, email, hashedPassword, authProvider]
         );
 
-        // Accéder au premier élément de rows
         const insertedUser = result.rows[0];
 
         const settings = await Settings.createSettings(insertedUser.id, defaultSettings.data.theme, defaultSettings.data.timezone, defaultSettings.data.email_notifications, defaultSettings.data.language);
@@ -49,7 +46,7 @@ export class User {
         if (result.rows.length > 0) {
             return result.rows[0];
         } else {
-            return null; // Aucun utilisateur trouvé
+            return null;
         }
     }
 
@@ -68,8 +65,6 @@ export class User {
             email: this.email,
             roles: this.roles,
             auth_provider: this.auth_provider,
-            api_key: this.api_key,
-            token: this.token,
             created_at: this.created_at,
             updated_at: this.updated_at
         };
