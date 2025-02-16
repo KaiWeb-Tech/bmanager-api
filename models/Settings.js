@@ -1,7 +1,7 @@
 import db from "../config/db.js";
 
 export class Settings {
-    constructor(id, user_id, theme, timezone, notifications, language, api_key, token, vf_token, created_at, updated_at) {
+    constructor(id, user_id, theme, timezone, notifications, language, api_key, token, vf_token, vf_account, created_at, updated_at) {
         this.id = id;
         this.user_id = user_id;
         this.theme = theme;
@@ -11,6 +11,7 @@ export class Settings {
         this.api_key = api_key;
         this.token = token;
         this.vf_token = vf_token;
+        this.vf_account = vf_account;
         this.created_at = created_at;
         this.updated_at = updated_at;
     }
@@ -26,6 +27,7 @@ export class Settings {
             json.api_key,
             json.token,
             json.vf_token,
+            json.vf_account,
             json.created_at,
             json.updated_at
         );
@@ -49,6 +51,10 @@ export class Settings {
             timezone: this.timezone,
             notifications: this.notifications,
             language: this.language,
+            api_key: this.api_key,
+            token: this.token,
+            vf_token: this.vf_token,
+            vf_account: this.vf_account,
             created_at: this.created_at,
             updated_at: this.updated_at
         };
